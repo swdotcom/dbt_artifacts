@@ -30,7 +30,6 @@
         query_completed_at TIMESTAMP_NTZ,
         execution_time DOUBLE,
         failures INTEGER,
-        rows_affected INTEGER,
         compiled_sql STRING
     )
 {%- endmacro %}
@@ -49,7 +48,6 @@
         query_completed_at TIMESTAMP,
         execution_time INTEGER,
         failures INTEGER,
-        rows_affected INTEGER,
         compiled_sql STRING
     )
 {%- endmacro %}
