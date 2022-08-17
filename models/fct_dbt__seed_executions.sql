@@ -16,8 +16,10 @@ seed_executions as (
         thread_id,
         status,
         compile_started_at,
+        compile_completed_at,
+        query_started_at
         query_completed_at,
-        total_node_runtime,
+        execution_time,
         rows_affected,
         materialization,
         database,

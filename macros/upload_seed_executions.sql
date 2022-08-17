@@ -69,7 +69,7 @@
                     null, {# query_completed_at #}
                 {% endif %}
 
-                {{ model.execution_time }}, {# total_node_runtime #}
+                {{ model.execution_time }}, {# execution_time #}
                 {{ model.adapter_response.rows_affected }}, -- rows_affected not available {# Databricks #}
                 '{{ model.node.config.materialized }}', {# materialization #}
                 '{{ model.node.database }}', {# database #}

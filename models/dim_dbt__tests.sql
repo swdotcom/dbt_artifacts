@@ -13,7 +13,10 @@ tests as (
         node_id,
         run_started_at,
         name,
+        column_name,
         depends_on_nodes,
+        depends_on_macros,
+        config,
         package_name,
         test_path,
         tags

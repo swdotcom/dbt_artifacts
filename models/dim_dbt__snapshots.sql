@@ -19,7 +19,8 @@ snapshots as (
         package_name,
         path,
         checksum,
-        strategy
+        strategy,
+        tags
     from base
 
 )

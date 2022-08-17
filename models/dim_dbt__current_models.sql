@@ -22,7 +22,7 @@ latest_models_runs as (
         model_executions.node_id
         , model_executions.was_full_refresh
         , model_executions.query_completed_at
-        , model_executions.total_node_runtime
+        , model_executions.execution_time
         , model_executions.rows_affected
         , row_number() over (
             partition by latest_models.node_id, model_executions.was_full_refresh
@@ -37,10 +37,10 @@ latest_model_stats as (
     select
         node_id
         , max(case when was_full_refresh then query_completed_at end) as last_full_refresh_run_completed_at
-        , max(case when was_full_refresh then total_node_runtime end) as last_full_refresh_run_total_runtime
+        , max(case when was_full_refresh then execution_time end) as last_full_refresh_run_execution_time
         , max(case when was_full_refresh then rows_affected end) as last_full_refresh_run_rows_affected
         , max(query_completed_at) as last_run_completed_at
-        , max(total_node_runtime) as last_run_total_runtime
+        , max(execution_time) as last_run_execution_time
         , max(rows_affected) as last_run_rows_affected
     from latest_models_runs
     where run_idx = 1
@@ -51,10 +51,10 @@ final as (
     select
         latest_models.*
         , latest_model_stats.last_full_refresh_run_completed_at
-        , latest_model_stats.last_full_refresh_run_total_runtime
+        , latest_model_stats.last_full_refresh_run_execution_time
         , latest_model_stats.last_full_refresh_run_rows_affected
         , latest_model_stats.last_run_completed_at
-        , latest_model_stats.last_run_total_runtime
+        , latest_model_stats.last_run_execution_time
         , latest_model_stats.last_run_rows_affected
     from latest_models
     left join latest_model_stats
