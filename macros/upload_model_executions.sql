@@ -72,7 +72,7 @@
                 {% endif %}
 
                 {{ model.execution_time }}, {# total_node_runtime #}
-                {{ model.adapter_response.rows_affected }}, -- {# rows_affected #}
+                {{ 'null' if model.adapter_response.rows_affected is none else model.adapter_response.rows_affected }}, {# rows_affected #}
                 '{{ model.node.config.materialized }}', {# materialization #}
                 '{{ model.node.database }}', {# database #}
                 '{{ model.node.schema }}', {# schema #}
