@@ -32,7 +32,7 @@
                 '{{ model.name }}', {# name #}
                 '{{ tojson(model.depends_on.nodes) }}', {# depends_on_nodes #}
                 '{{ tojson(model.depends_on.macros) }}', {# depends_on_macros #}
-                '{{ tojson(model.config) }}' {# config #}
+                '{{ tojson(model.config) }}', {# config #}
                 '{{ model.package_name }}', {# package_name #}
                 '{{ model.original_file_path | replace('\\', '\\\\') }}', {# path #}
                 '{{ model.checksum.checksum }}', {# checksum #}
