@@ -30,7 +30,8 @@
         package_name STRING,
         path STRING,
         checksum STRING,
-        materialization STRING
+        materialization STRING,
+        tags ARRAY
     )
 {%- endmacro %}
 
@@ -48,6 +49,7 @@
         package_name STRING,
         path STRING,
         checksum STRING,
-        materialization STRING
+        materialization STRING,
+        tags STRING
     )
 {%- endmacro %}

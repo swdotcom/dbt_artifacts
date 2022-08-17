@@ -16,7 +16,8 @@
             {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(6) }},
             {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(7) }},
             {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(8) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(9) }}
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(9) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(10)) }}
         from values
         {% for seed in seeds -%}
             (
@@ -28,7 +29,8 @@
                 '{{ seed.name }}', {# name #}
                 '{{ seed.package_name }}', {# package_name #}
                 '{{ seed.original_file_path | replace('\\', '\\\\') }}', {# path #}
-                '{{ seed.checksum.checksum }}' {# checksum #}
+                '{{ seed.checksum.checksum }}', {# checksum #}
+                '{{ tojson(seed.tags) }}' {# tags #}
             )
             {%- if not loop.last %},{%- endif %}
         {%- endfor %}
