@@ -16,10 +16,13 @@ enhanced as (
         schema,
         name,
         depends_on_nodes,
+        depends_on_macros,
+        config,
         package_name,
         path,
         checksum,
-        materialization
+        materialization,
+        tags
     from base
 
 )
