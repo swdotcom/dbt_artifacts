@@ -15,10 +15,12 @@
             {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(5) }},
             {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(6) }},
             {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(7)) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(8) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(9) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(8)) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(9)) }},
             {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(10) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(11) }}
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(11) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(12) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(13) }}
         from values
         {% for model in models -%}
             (
@@ -29,6 +31,8 @@
                 '{{ model.schema }}', {# schema #}
                 '{{ model.name }}', {# name #}
                 '{{ tojson(model.depends_on.nodes) }}', {# depends_on_nodes #}
+                '{{ tojson(model.depends_on.macros) }}', {# depends_on_macros #}
+                '{{ tojson(model.config) }}' {# config #}
                 '{{ model.package_name }}', {# package_name #}
                 '{{ model.original_file_path | replace('\\', '\\\\') }}', {# path #}
                 '{{ model.checksum.checksum }}', {# checksum #}
