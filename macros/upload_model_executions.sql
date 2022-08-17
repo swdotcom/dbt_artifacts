@@ -137,7 +137,7 @@
                 '{{ tojson(model.timing) }}', {# timing #}
                 '{{ model.thread_id }}', {# thread_id #}
                 {{ model.execution_time }}, {# execution_time #}
-                '{{ tojson(model.adapter_response }}', {# adapter_response #}
+                '{{ tojson(model.adapter_response) }}', {# adapter_response #}
                 '{{ model.message }}', {# message #}
                 '{{ model.failures }}', {# failures #}
                 '{{ tojson(model.node) | replace("'", "\\'") }}' {# node #}
