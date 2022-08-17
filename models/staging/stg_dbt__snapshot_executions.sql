@@ -18,7 +18,7 @@ enhanced as (
         status,
         compile_started_at,
         compile_completed_at,
-        query_started_at
+        query_started_at,
         query_completed_at,
         execution_time,
         rows_affected,

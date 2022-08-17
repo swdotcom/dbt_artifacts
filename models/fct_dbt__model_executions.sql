@@ -16,7 +16,7 @@ model_executions as (
         thread_id,
         status,
         compile_started_at,
-        compiled_completed_at,
+        compile_completed_at,
         query_started_at,
         query_completed_at,
         execution_time,
