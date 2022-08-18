@@ -10,29 +10,13 @@
         select
             {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(1) }},
             {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(2) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(3) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(4) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(5) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(6)) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(7)) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(8)) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(9) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(10) }},
-            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(11)) }}
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(3)) }}
         from values
         {% for test in tests -%}
             (
                 '{{ invocation_id }}', {# command_invocation_id #}
-                '{{ test.unique_id }}', {# node_id #}
                 '{{ run_started_at }}', {# run_started_at #}
-                '{{ test.name }}', {# name #}
-                '{{ test.column_name }}', {# column_name #}
-                '{{ tojson(test.depends_on.nodes) }}', {# depends_on_nodes #}
-                '{{ tojson(test.depends_on.macros) }}', {# depends_on_macros #}
-                '{{ tojson(model.config) | replace("'", "\\'") }}', {# config #}
-                '{{ test.package_name }}', {# package_name #}
-                '{{ test.original_file_path | replace('\\', '\\\\') }}', {# test_path #}
-                '{{ tojson(test.tags) }}' {# tags #}
+                '{{ tojson(test) | replace('\\', '\\\\') | replace("'", "\\'") }}' {# test #}
             )
             {%- if not loop.last %},{%- endif %}
         {%- endfor %}

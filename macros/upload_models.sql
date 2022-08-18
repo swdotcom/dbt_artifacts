@@ -75,7 +75,7 @@
             (
                 '{{ invocation_id }}', {# command_invocation_id #}
                 '{{ run_started_at }}', {# run_started_at #}
-                '{{ tojson(model) | replace('\\', '\\\\') | replace("'", "\\'") }}'
+                '{{ tojson(model) | replace('\\', '\\\\') | replace("'", "\\'") }}' {# model #}
             )
             {%- if not loop.last %},{%- endif %}
         {%- endfor %}
