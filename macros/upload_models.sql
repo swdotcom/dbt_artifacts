@@ -40,7 +40,7 @@
                 '{{ model.checksum.checksum }}', {# checksum #}
                 '{{ model.config.materialized }}', {# materialization #}
                 '{{ tojson(model.tags) }}', {# tags #}
-                '{{ model.raw_sql | replace("'", "\\'") | replace('\\', '\\\\') }}' {# raw_sql #}
+                '{{ model.raw_sql | replace('\\', '\\\\') | replace("'", "\\'") }}' {# raw_sql #}
 
             )
             {%- if not loop.last %},{%- endif %}
