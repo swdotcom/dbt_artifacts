@@ -16,7 +16,7 @@
 
 {%- endmacro %}
 
-{% macro snowflake__get_create_models_table_if_not_exists_statement(database_name, schema_name, table_name) -%}
+{% macro snowflake__get_create_models_table_if_not_exists_statement_test(database_name, schema_name, table_name) -%}
     create table {{database_name}}.{{schema_name}}.{{table_name}} (
         command_invocation_id STRING,
         node_id STRING,
@@ -36,7 +36,7 @@
     )
 {%- endmacro %}
 
-{% macro default__get_create_models_table_if_not_exists_statement(database_name, schema_name, table_name) -%}
+{% macro default__get_create_models_table_if_not_exists_statement_test(database_name, schema_name, table_name) -%}
     create table {{database_name}}.{{schema_name}}.{{table_name}} (
         command_invocation_id STRING,
         node_id STRING,
@@ -53,5 +53,22 @@
         materialization STRING,
         tags STRING,
         raw_sql STRING
+    )
+{%- endmacro %}
+
+
+{% macro snowflake__get_create_models_table_if_not_exists_statement(database_name, schema_name, table_name) -%}
+    create table {{database_name}}.{{schema_name}}.{{table_name}} (
+        command_invocation_id STRING,
+        run_started_at TIMESTAMP_NTZ,
+        model VARIANT
+    )
+{%- endmacro %}
+
+{% macro default__get_create_models_table_if_not_exists_statement(database_name, schema_name, table_name) -%}
+    create table {{database_name}}.{{schema_name}}.{{table_name}} (
+        command_invocation_id STRING,
+        node_id STRING,
+        model STRING
     )
 {%- endmacro %}
