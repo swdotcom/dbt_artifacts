@@ -1,4 +1,4 @@
-{% macro upload_model_executions(results) -%}
+{% macro upload_model_executions_test(results) -%}
     {% set src_dbt_model_executions = source('dbt_artifacts', 'model_executions') %}
     {% set models = [] %}
     {% for result in results  %}
@@ -77,6 +77,50 @@
                 '{{ model.node.database }}', {# database #}
                 '{{ model.node.schema }}', {# schema #}
                 '{{ model.node.name }}' {# name #}
+            )
+            {%- if not loop.last %},{%- endif %}
+        {%- endfor %}
+        {% endset %}
+
+        {{ dbt_artifacts.insert_into_metadata_table(
+            database_name=src_dbt_model_executions.database,
+            schema_name=src_dbt_model_executions.schema,
+            table_name=src_dbt_model_executions.identifier,
+            content=model_execution_values
+            )
+        }}
+    {% endif %}
+{% endmacro -%}
+
+{% macro upload_model_executions(results) -%}
+    {% set src_dbt_model_executions = source('dbt_artifacts', 'model_executions') %}
+    {% set models = [] %}
+    {% for result in results  %}
+        {% if result.node.resource_type == "model" %}
+            {% do models.append(result) %}
+        {% endif %}
+    {% endfor %}
+
+    {% if models != [] %}
+        {% set model_execution_values %}
+        select
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(1) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(2) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(3) }},
+            {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(4)) }}
+        from values
+        {% for model in results if model.node.resource_type == "model" -%}
+            (
+                '{{ invocation_id }}', {# command_invocation_id #}
+                '{{ run_started_at }}', {# run_started_at #}
+
+                {% set config_full_refresh = model.node.config.full_refresh %}
+                {% if config_full_refresh is none %}
+                    {% set config_full_refresh = flags.FULL_REFRESH %}
+                {% endif %}
+                '{{ config_full_refresh }}', {# was_full_refresh #}
+
+                '{{ tojson(model) | replace('\\', '\\\\') | replace("'", "\\'") }}' {# model #}
             )
             {%- if not loop.last %},{%- endif %}
         {%- endfor %}
