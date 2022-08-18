@@ -154,6 +154,8 @@
                 {% endif %}
 
                 '{{ tojson(model.adapter_response) | replace('\\', '\\\\') | replace("'", "\\'") }}', {# adapter_response #}
+                '{{ model.node.compiled_sql | replace('\\', '\\\\') | replace("'", "\\'") }}' {# compiled_sql #}
+                {% do model.node.pop('compiled_sql') %}
                 '{{ tojson(model.node) | replace('\\', '\\\\') | replace("'", "\\'") }}' {# node #}
             )
             {%- if not loop.last %},{%- endif %}
