@@ -16,7 +16,7 @@ with base as (
     where
         1 = 1
     
-    {% if target.name = 'reddev ' %}
+    {% if target.name == 'reddev' %}
         and run_started_at > dateadd('day', -10, current_date)
     
     {% elif is_incremental %}
@@ -43,7 +43,7 @@ enhanced as (
         execution_time,
         failures,
         compiled_sql
-        
+
     from base
 
 )
