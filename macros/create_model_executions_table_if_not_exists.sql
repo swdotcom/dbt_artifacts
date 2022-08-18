@@ -65,7 +65,17 @@
         command_invocation_id STRING,
         run_started_at TIMESTAMP_NTZ,
         was_full_refresh BOOLEAN,
-        model VARIANT
+        status STRING,
+        thread_id STRING,
+        execution_time DOUBLE,
+        message STRING,
+        failures INTEGER,
+        compile_started_at TIMESTAMP_NTZ,
+        compile_completed_at TIMESTAMP_NTZ,
+        query_started_at TIMESTAMP_NTZ,
+        query_completed_at TIMESTAMP_NTZ,
+        adapter_response VARIANT,
+        node VARIANT
     )
 {%- endmacro %}
 
@@ -74,6 +84,16 @@
         command_invocation_id STRING,
         run_started_at TIMESTAMP,
         was_full_refresh BOOLEAN,
-        model STRING
+        status STRING,
+        thread_id STRING,
+        execution_time INTEGER,
+        message STRING,
+        failures INTEGER,
+        compile_started_at TIMESTAMP,
+        compile_completed_at TIMESTAMP,
+        query_started_at TIMESTAMP,
+        query_completed_at TIMESTAMP,
+        adapter_response STRING,
+        node STRING
     )
 {%- endmacro %}

@@ -120,7 +120,41 @@
                 {% endif %}
                 '{{ config_full_refresh }}', {# was_full_refresh #}
 
-                '{{ tojson(model) | replace('\\', '\\\\') | replace("'", "\\'") }}' {# model #}
+                '{{ model.status }}', {# status #}
+                '{{ model.thread_id }}', {# thread_id #}
+                {{ model.execution_time }}, {# execution_time #}
+                '{{ model.message }}', {# message #}
+                {{ model.failures }}, {# failures #}
+
+                {% if model.timing != [] %}
+                    {% for stage in model.timing if stage.name == "compile" %}
+                        {% if loop.length == 0 %}
+                            null, {# compile_started_at #}
+                            null, {# compile_completed_at #}
+                        {% else %}
+                            '{{ stage.started_at }}', {# compile_started_at #}
+                            '{{ stage.completed_at }}', {# compile_completed_at #}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for stage in model.timing if stage.name == "execute" %}
+                        {% if loop.length == 0 %}
+                            null, {# query_started_at #}
+                            null, {# query_completed_at #}
+                        {% else %}
+                            '{{ stage.started_at }}', {# query_started_at #}
+                            '{{ stage.completed_at }}', {# query_completed_at #}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    null, {# compile_started_at #}
+                    null, {# compile_completed_at #}
+                    null, {# query_started_at #}
+                    null, {# query_completed_at #}
+                {% endif %}
+
+                '{{ tojson(model.adapter_response) | replace('\\', '\\\\') | replace("'", "\\'") }}', {# adapter_response #}
+                '{{ tojson(model.node) | replace('\\', '\\\\') | replace("'", "\\'") }}' {# node #}
             )
             {%- if not loop.last %},{%- endif %}
         {%- endfor %}
