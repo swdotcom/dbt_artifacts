@@ -19,7 +19,7 @@ with base as (
     {% if target.name == 'reddev' %}
         and run_started_at > dateadd('day', -10, current_date)
     
-    {% elif is_incremental %}
+    {% elif is_incremental() %}
         and run_started_at > (select max(run_started_at) from {{ this }})
     
     {% endif %}
