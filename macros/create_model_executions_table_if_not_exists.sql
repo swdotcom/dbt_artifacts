@@ -75,6 +75,7 @@
         query_started_at TIMESTAMP_NTZ,
         query_completed_at TIMESTAMP_NTZ,
         adapter_response VARIANT,
+        compiled_sql STRING,
         node VARIANT
     )
 {%- endmacro %}
@@ -94,6 +95,7 @@
         query_started_at TIMESTAMP,
         query_completed_at TIMESTAMP,
         adapter_response STRING,
+        compiled_sql STRING
         node STRING
     )
 {%- endmacro %}
