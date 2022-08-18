@@ -31,7 +31,8 @@
         path STRING,
         checksum STRING,
         materialization STRING,
-        tags ARRAY
+        tags ARRAY,
+        raw_sql STRING
     )
 {%- endmacro %}
 
@@ -50,6 +51,7 @@
         path STRING,
         checksum STRING,
         materialization STRING,
-        tags STRING
+        tags STRING,
+        raw_sql STRING
     )
 {%- endmacro %}
