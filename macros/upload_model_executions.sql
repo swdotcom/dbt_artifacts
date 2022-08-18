@@ -134,7 +134,7 @@
                 '{{ model.thread_id }}', {# thread_id #}
                 {{ model.execution_time }}, {# execution_time #}
                 '{{ model.message }}', {# message #}
-                {{ 'null' if test.failures is none else test.failures }}, {# failures #}
+                {{ 'null' if model.failures is none else model.failures }}, {# failures #}
 
                 {% if model.timing != [] %}
                     {% for stage in model.timing if stage.name == "compile" %}
