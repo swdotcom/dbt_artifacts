@@ -117,7 +117,8 @@
             {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(11) }},
             {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(12) }},
             {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(13)) }},
-            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(14) }}
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(14) }},
+            {{ adapter.dispatch('column_identifier', 'dbt_artifacts')(15) }}
             {# {{ adapter.dispatch('parse_json', 'dbt_artifacts')(adapter.dispatch('column_identifier', 'dbt_artifacts')(14)) }} #}
         from values
         {% for model in results if model.node.resource_type == "model" -%}
@@ -165,7 +166,8 @@
                 {% endif %}
 
                 '{{ tojson(model.adapter_response) | replace('\\', '\\\\') | replace("'", "\\'") }}', {# adapter_response #}
-                '{{ model.node.compiled_sql | replace('\\', '\\\\') | replace("'", "\\'") }}' {# compiled_sql #}
+                '{{ model.node.compiled_sql | replace('\\', '\\\\') | replace("'", "\\'") }}', {# compiled_sql #}
+                '{{ model.node.raw_sql | replace('\\', '\\\\') | replace("'", "\\'") }}' {# raw_sql #}
             )
             {%- if not loop.last %},{%- endif %}
         {%- endfor %}
