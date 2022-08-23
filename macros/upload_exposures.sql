@@ -16,7 +16,7 @@
             (
                 '{{ invocation_id }}', {# command_invocation_id #}
                 '{{ run_started_at }}', {# run_started_at #}
-                '{{ tojson(exposure) | replace('\\', '\\\\') | replace("'", "\\'") }}' {# model #}
+                '{{ tojson(exposure) | replace('\\', '\\\\') | replace("'", "\\'") }}' {# exposure #}
             )
             {%- if not loop.last %},{%- endif %}
         {%- endfor %}

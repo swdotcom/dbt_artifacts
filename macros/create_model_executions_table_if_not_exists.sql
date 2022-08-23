@@ -16,53 +16,10 @@
 
 {%- endmacro %}
 
-{% macro snowflake__get_create_model_executions_table_if_not_exists_statement_test(database_name, schema_name, table_name) -%}
-    create table {{database_name}}.{{schema_name}}.{{table_name}} (
-        command_invocation_id STRING,
-        node_id STRING,
-        query_id STRING,
-        run_started_at TIMESTAMP_NTZ,
-        was_full_refresh BOOLEAN,
-        thread_id STRING,
-        status STRING,
-        compile_started_at TIMESTAMP_NTZ,
-        compile_completed_at TIMESTAMP_NTZ,
-        query_started_at TIMESTAMP_NTZ,
-        query_completed_at TIMESTAMP_NTZ,
-        execution_time DOUBLE,
-        rows_affected INTEGER,
-        materialization STRING,
-        database STRING,
-        schema STRING,
-        name STRING
-    )
-{%- endmacro %}
-
-{% macro default__get_create_model_executions_table_if_not_exists_statement_test(database_name, schema_name, table_name) -%}
-    create table {{database_name}}.{{schema_name}}.{{table_name}} (
-        command_invocation_id STRING,
-        node_id STRING,
-        query_id STRING,
-        run_started_at TIMESTAMP,
-        was_full_refresh BOOLEAN,
-        thread_id STRING,
-        status STRING,
-        compile_started_at TIMESTAMP,
-        compile_completed_at TIMESTAMP,
-        query_started_at TIMESTAMP,
-        query_completed_at TIMESTAMP,
-        execution_time INTEGER,
-        rows_affected INTEGER,
-        materialization STRING,
-        database STRING,
-        schema STRING,
-        name STRING
-    )
-{%- endmacro %}
-
 {% macro snowflake__get_create_model_executions_table_if_not_exists_statement(database_name, schema_name, table_name) -%}
     create table {{database_name}}.{{schema_name}}.{{table_name}} (
         command_invocation_id STRING,
+        unique_id STRING,
         run_started_at TIMESTAMP_NTZ,
         was_full_refresh BOOLEAN,
         status STRING,
@@ -75,6 +32,10 @@
         query_started_at TIMESTAMP_NTZ,
         query_completed_at TIMESTAMP_NTZ,
         adapter_response VARIANT,
+        materialization STRING,
+        database STRING,
+        schema STRING,
+        name STRING,
         compiled_sql STRING
     )
 {%- endmacro %}
@@ -82,6 +43,7 @@
 {% macro default__get_create_model_executions_table_if_not_exists_statement(database_name, schema_name, table_name) -%}
     create table {{database_name}}.{{schema_name}}.{{table_name}} (
         command_invocation_id STRING,
+        unique_id STRING,
         run_started_at TIMESTAMP,
         was_full_refresh BOOLEAN,
         status STRING,
@@ -94,6 +56,10 @@
         query_started_at TIMESTAMP,
         query_completed_at TIMESTAMP,
         adapter_response STRING,
+        materialization STRING,
+        database STRING,
+        schema STRING,
+        name STRING,
         compiled_sql STRING
     )
 {%- endmacro %}
