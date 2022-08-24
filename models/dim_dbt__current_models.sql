@@ -29,39 +29,22 @@ latest_models as (
 
 ),
 
-latest_models_runs as (
+latest_model_stats as (
 
     select
         model_executions.node_id
-        , model_executions.was_full_refresh
-        , model_executions.query_completed_at
-        , model_executions.execution_time
-        , model_executions.rows_affected
-
+        , max(case when model_executions.was_full_refresh then model_executions.query_completed_at end) as last_full_refresh_run_completed_at
+        , max(case when model_executions.was_full_refresh then model_executions.execution_time end) as last_full_refresh_run_execution_time
+        , max(case when model_executions.was_full_refresh then model_executions.rows_affected end) as last_full_refresh_run_rows_affected
+        , max(model_executions.query_completed_at) as last_run_completed_at
+        , max(model_executions.execution_time) as last_run_execution_time
+        , max(model_executions.rows_affected) as last_run_rows_affected
+    
     from
         model_executions
     inner join
         latest_models 
         on model_executions.node_id = latest_models.node_id
-    
-    where
-        model_executions.status = 'success'
-
-),
-
-latest_model_stats as (
-
-    select
-        node_id
-        , max(case when was_full_refresh then query_completed_at end) as last_full_refresh_run_completed_at
-        , max(case when was_full_refresh then execution_time end) as last_full_refresh_run_execution_time
-        , max(case when was_full_refresh then rows_affected end) as last_full_refresh_run_rows_affected
-        , max(query_completed_at) as last_run_completed_at
-        , max(execution_time) as last_run_execution_time
-        , max(rows_affected) as last_run_rows_affected
-    
-    from
-        latest_models_runs
     
     group by 1
 
@@ -69,7 +52,7 @@ latest_model_stats as (
         row_number() over (
             partition by latest_models.node_id, model_executions.was_full_refresh
             order by model_executions.query_completed_at desc
-        ) = 1
+        )
 
 ),
 
