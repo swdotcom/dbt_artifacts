@@ -45,6 +45,7 @@ invocations as (
         dbt_cloud_run_id,
         dbt_cloud_run_reason_category,
         dbt_cloud_run_reason,
+        job_name,
         env_vars,
         dbt_vars,
         selected_resources
