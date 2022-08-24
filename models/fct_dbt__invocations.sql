@@ -46,7 +46,7 @@ invocations as (
         base.dbt_version,
         base.project_name,
         base.run_started_at,
-        executions.run_ended_at
+        executions.run_ended_at,
         base.dbt_command,
         base.full_refresh_flag,
         base.target_profile_name,
