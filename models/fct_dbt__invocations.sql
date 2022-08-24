@@ -46,7 +46,8 @@ invocations as (
         dbt_cloud_run_reason_category,
         dbt_cloud_run_reason,
         env_vars,
-        dbt_vars
+        dbt_vars,
+        selected_resources
 
     from
         base
