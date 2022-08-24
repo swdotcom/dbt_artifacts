@@ -33,15 +33,26 @@ snapshots as (
         command_invocation_id,
         node_id,
         run_started_at,
+        materialized,
+        on_schema_change,
+        strategy,
+        check_columns,
+        post_hook,
+        depends_on_nodes,
+        depends_on_macros,
+        tags,
+        refs,
+        sources,
         database,
         schema,
         name,
-        depends_on_nodes,
         package_name,
         path,
+        raw_sql,
+        compiled_sql,
         checksum,
-        strategy,
-        tags
+        is_enabled,
+        is_full_refresh
 
     from
         base

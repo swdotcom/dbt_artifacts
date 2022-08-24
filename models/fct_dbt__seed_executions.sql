@@ -32,20 +32,20 @@ seed_executions as (
         seed_execution_id,
         command_invocation_id,
         node_id,
-        run_started_at,
-        was_full_refresh,
         thread_id,
-        status,
+        run_started_at,
         compile_started_at,
         compile_completed_at,
         query_started_at,
-        query_completed_at,
+        query_completed_at,        
         execution_time,
+        status,
         rows_affected,
         materialization,
         database,
         schema,
-        name
+        name,
+        was_full_refresh
 
     from
         base

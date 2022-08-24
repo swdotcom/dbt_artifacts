@@ -37,10 +37,6 @@ latest_models_runs as (
         , model_executions.query_completed_at
         , model_executions.execution_time
         , model_executions.rows_affected
-        , row_number() over (
-            partition by latest_models.node_id, model_executions.was_full_refresh
-            order by model_executions.query_completed_at desc
-        ) as run_idx
 
     from
         model_executions
@@ -67,10 +63,13 @@ latest_model_stats as (
     from
         latest_models_runs
     
-    where
-        run_idx = 1
-    
     group by 1
+
+    qualify
+        row_number() over (
+            partition by latest_models.node_id, model_executions.was_full_refresh
+            order by model_executions.query_completed_at desc
+        ) = 1
 
 ),
 

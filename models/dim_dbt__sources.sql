@@ -33,14 +33,23 @@ sources as (
         command_invocation_id,
         node_id,
         run_started_at,
-        database,
-        schema,
-        source_name,
+        depends_on_nodes,
+        depends_on_macros,
+        tags,
+        refs,
         loader,
+        source_name,
         name,
-        identifier,
-        loaded_at_field,
-        freshness
+        package_name,
+        path,
+        checksum,
+        freshness_warn_after_count,
+        freshness_warn_after_period,
+        freshness_error_after_count,
+        freshness_error_after_period,
+        freshness_filter,
+        is_enabled,
+        is_full_refresh
 
     from
         base

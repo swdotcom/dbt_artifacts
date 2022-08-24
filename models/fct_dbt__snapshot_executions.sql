@@ -33,20 +33,24 @@ snapshot_executions as (
         command_invocation_id,
         node_id,
         query_id,
-        run_started_at,
-        was_full_refresh,
         thread_id,
-        status,
+        run_started_at,
         compile_started_at,
         compile_completed_at,
+        compile_execution_time,
         query_started_at,
         query_completed_at,
+        query_execution_time,    
         execution_time,
+        status,
         rows_affected,
+        failures,
         materialization,
         database,
         schema,
-        name
+        name,
+        compiled_sql,
+        was_full_refresh
 
     from
         base
