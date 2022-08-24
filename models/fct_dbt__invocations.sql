@@ -37,7 +37,7 @@ executions as (
         base
         on executions__aggregated.command_invocation_id = base.command_invocation_id
 
-)
+),
 
 invocations as (
 
