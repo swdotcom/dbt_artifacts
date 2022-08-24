@@ -45,7 +45,7 @@
                 '{{ model.status }}', {# status #}
                 '{{ model.thread_id }}', {# thread_id #}
                 {{ model.execution_time }}, {# execution_time #}
-                '{{ model.message }}', {# message #}
+                '{{ model.message | replace('\\', '\\\\') | replace("'", "\\'") }}', {# message #}
                 {{ 'null' if model.failures is none else model.failures }}, {# failures #}
 
                 {% if model.timing != [] %}

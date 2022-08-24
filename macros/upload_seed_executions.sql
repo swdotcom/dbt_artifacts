@@ -43,7 +43,7 @@
                 '{{ model.status }}', {# status #}
                 '{{ model.thread_id }}', {# thread_id #}
                 {{ model.execution_time }}, {# execution_time #}
-                '{{ model.message }}', {# message #}
+                '{{ model.message | replace('\\', '\\\\') | replace("'", "\\'") }}', {# message #}
 
                 {% if model.timing != [] %}
                     {% for stage in model.timing if stage.name == "compile" %}
