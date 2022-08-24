@@ -17,7 +17,7 @@ with invocations as (
     
     {% endif %}
 
-)
+),
 
 model_executions as (
 
