@@ -29,30 +29,30 @@ with base as (
 enhanced as (
 
     select
-        {{ dbt_utils.surrogate_key(['command_invocation_id', 'snapshot:unique_id']) }} as snapshot_execution_id,
+        {{ dbt_utils.surrogate_key(['command_invocation_id', 'snapshot:unique_id::string']) }} as snapshot_execution_id,
         command_invocation_id,
-        snapshot:unique_id as node_id,
+        snapshot:unique_id::string as node_id,
         run_started_at,
-        snapshot:config:materialized as materialized,
-        snapshot:config:on_schema_change as on_schema_change,
-        snapshot:config:strategy as strategy,
+        snapshot:config:materialized::string as materialized,
+        snapshot:config:on_schema_change::string as on_schema_change,
+        snapshot:config:strategy::string as strategy,
         snapshot:config:check_cols as check_columns,
-        snapshot:config:"post-hook":sql as post_hook,
+        snapshot:config:"post-hook":sql::string as post_hook,
         snapshot:depends_on:nodes as depends_on_nodes,
         snapshot:depends_on:macros as depends_on_macros,
         snapshot:tags as tags,
         snapshot:refs as refs,
         snapshot:sources as sources,
-        snapshot:database as database,
-        snapshot:schema as schema,
-        snapshot:name as name,
-        snapshot:package_name as package_name,
-        snapshot:path as path,
-        snapshot:raw_sql as raw_sql,
-        snapshot:compiled_sql as compiled_sql,
-        snapshot:checksum as checksum,
-        snapshot:config:enabled as is_enabled,
-        snapshot:config:full_refresh as is_full_refresh
+        snapshot:database::string as database,
+        snapshot:schema::string as schema,
+        snapshot:name::string as name,
+        snapshot:package_name::string as package_name,
+        snapshot:path::string as path,
+        snapshot:raw_sql::string as raw_sql,
+        snapshot:compiled_sql::string as compiled_sql,
+        snapshot:checksum::string as checksum,
+        snapshot:config:enabled::boolean as is_enabled,
+        snapshot:config:full_refresh::boolean as is_full_refresh
 
     from
         base

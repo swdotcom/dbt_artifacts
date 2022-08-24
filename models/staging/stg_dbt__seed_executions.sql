@@ -42,7 +42,7 @@ enhanced as (
         datediff('millisecond', query_started_at, query_completed_at) / 1000 as query_execution_time,
         execution_time,
         status,
-        adapter_response:rows_affected as rows_affected,
+        adapter_response:rows_affected::number as rows_affected,
         materialization,
         database,
         schema,
