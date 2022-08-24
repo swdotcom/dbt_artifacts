@@ -26,7 +26,7 @@ model_executions as (
       , count(distinct models.node_id) as models
       , sum(models.compile_execution_time) as compile_execution_time
       , sum(models.query_execution_time) as query_execution_time
-      , sum(models.execction_time) as execution_time
+      , sum(models.execution_time) as execution_time
       , max(models.query_completed_at) as last_query_completed_at
 
     from
@@ -47,7 +47,7 @@ seed_executions as (
       , count(distinct seeds.node_id) as seeds
       , sum(seeds.compile_execution_time) as compile_execution_time
       , sum(seeds.query_execution_time) as query_execution_time
-      , sum(seeds.execction_time) as execution_time
+      , sum(seeds.execution_time) as execution_time
       , max(seeds.query_completed_at) as last_query_completed_at
 
     from {{ ref('stg_dbt__seed_executions') }} as seeds
@@ -66,7 +66,7 @@ snapshot_executions as (
       , count(distinct snapshots.node_id) as snapshots
       , sum(snapshots.compile_execution_time) as compile_execution_time
       , sum(snapshots.query_execution_time) as query_execution_time
-      , sum(snapshots.execction_time) as execution_time
+      , sum(snapshots.execution_time) as execution_time
       , max(snapshots.query_completed_at) as last_query_completed_at
 
     from {{ ref('stg_dbt__snapshot_executions') }} as snapshots
@@ -85,7 +85,7 @@ test_executions as (
       , count(distinct tests.node_id) as tests
       , sum(tests.compile_execution_time) as compile_execution_time
       , sum(tests.query_execution_time) as query_execution_time
-      , sum(tests.execction_time) as execution_time
+      , sum(tests.execution_time) as execution_time
       , max(tests.query_completed_at) as last_query_completed_at
 
     from {{ ref('stg_dbt__seed_executions') }} as tests
