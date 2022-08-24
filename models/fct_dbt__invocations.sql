@@ -26,32 +26,56 @@ with base as (
 
 ),
 
+executions as (
+
+    select
+        executions__aggregated.*
+
+    from
+        {{ ref('executions__aggregated') }}
+    inner join
+        base
+        on executions__aggregated.command_invocation_id = base.command_invocation_id
+
+)
+
 invocations as (
 
     select
-        command_invocation_id,
-        dbt_version,
-        project_name,
-        run_started_at,
-        dbt_command,
-        full_refresh_flag,
-        target_profile_name,
-        target_name,
-        target_database,
-        target_schema,
-        target_threads,
-        dbt_cloud_project_id,
-        dbt_cloud_job_id,
-        dbt_cloud_run_id,
-        dbt_cloud_run_reason_category,
-        dbt_cloud_run_reason,
-        job_name,
-        env_vars,
-        dbt_vars,
-        selected_resources
+        base.command_invocation_id,
+        base.dbt_version,
+        base.project_name,
+        base.run_started_at,
+        executions.run_ended_at
+        base.dbt_command,
+        base.full_refresh_flag,
+        base.target_profile_name,
+        base.target_name,
+        base.target_database,
+        base.target_schema,
+        base.target_threads,
+        base.dbt_cloud_project_id,
+        base.dbt_cloud_job_id,
+        base.dbt_cloud_run_id,
+        base.dbt_cloud_run_reason_category,
+        base.dbt_cloud_run_reason,
+        base.job_name,
+        base.env_vars,
+        base.dbt_vars,
+        base.selected_resources,
+        executions.models,
+        executions.tests,
+        executions.snapshots,
+        executions.seeds,
+        executions.compile_execution_time,
+        executions.query_execution_time,
+        executions.execution_time
 
     from
         base
+    left join
+        executions
+        on base.command_invocation_id = executions.command_invocation_id
 
 )
 
