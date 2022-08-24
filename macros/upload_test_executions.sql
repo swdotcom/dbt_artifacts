@@ -71,9 +71,9 @@
                     null, {# query_completed_at #}
                 {% endif %}
 
-                '{{ model.node.database }}', {# database #}
-                '{{ model.node.schema }}', {# schema #}
-                '{{ model.node.name }}', {# name #}
+                '{{ test.node.database }}', {# database #}
+                '{{ test.node.schema }}', {# schema #}
+                '{{ test.node.name }}', {# name #}
                 '{{ test.node.compiled_sql | replace("'","\\'") }}' {# compiled_sql #}
             )
             {%- if not loop.last %},{%- endif %}
