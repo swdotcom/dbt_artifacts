@@ -29,24 +29,26 @@ with base as (
 enhanced as (
 
     select
-        {{ dbt_utils.surrogate_key(['command_invocation_id', 'node_id']) }} as snapshot_execution_id,
+        {{ dbt_utils.surrogate_key(['command_invocation_id', 'unique_id']) }} as snapshot_execution_id,
         command_invocation_id,
-        node_id,
-        query_id,
-        run_started_at,
-        was_full_refresh,
+        unique_id as node_id,
+        adapter_response::query_id as query_id
         split(thread_id, '-')[1]::int as thread_id,
-        status,
+        run_started_at,
         compile_started_at,
         compile_completed_at,
         query_started_at,
-        query_completed_at,
+        query_completed_at,        
         execution_time,
-        rows_affected,
+        status,
+        adapter_response:rows_affected as rows_affected
+        failures,
         materialization,
         database,
         schema,
-        name
+        name,
+        compiled_sql,
+        was_full_refresh
 
     from
         base
