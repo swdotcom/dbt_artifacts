@@ -40,7 +40,7 @@ enhanced as (
         query_completed_at,        
         execution_time,
         status,
-        adapter_response:rows_affected as rows_affected
+        adapter_response:rows_affected as rows_affected,
         materialization,
         database,
         schema,

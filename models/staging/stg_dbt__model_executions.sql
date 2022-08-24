@@ -32,7 +32,7 @@ enhanced as (
         {{ dbt_utils.surrogate_key(['command_invocation_id', 'unique_id']) }} as model_execution_id,
         command_invocation_id,
         unique_id as node_id,
-        adapter_response:query_id as query_id
+        adapter_response:query_id as query_id,
         split(thread_id, '-')[1]::int as thread_id,
         run_started_at,
         compile_started_at,
@@ -41,7 +41,7 @@ enhanced as (
         query_completed_at,        
         execution_time,
         status,
-        adapter_response:rows_affected as rows_affected
+        adapter_response:rows_affected as rows_affected,
         failures,
         materialization,
         database,

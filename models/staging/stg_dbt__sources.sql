@@ -52,7 +52,7 @@ enhanced as (
         source:freshness:warn_after:period as warn_after_period,
         source:freshness:error_after:count as error_after_count,
         source:freshness:error_after:period as error_after_period,
-        source:freshness:filter as freshness_filter
+        source:freshness:filter as freshness_filter,
         source:config:enabled as is_enabled,
         source:config:full_refresh as is_full_refresh
 
