@@ -52,7 +52,7 @@ latest_model_stats as (
         row_number() over (
             partition by latest_models.node_id, model_executions.was_full_refresh
             order by model_executions.query_completed_at desc
-        )
+        ) = 1
 
 ),
 
