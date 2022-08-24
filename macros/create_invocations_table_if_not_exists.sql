@@ -34,8 +34,9 @@
         dbt_cloud_run_id STRING,
         dbt_cloud_run_reason_category STRING,
         dbt_cloud_run_reason STRING,
-        env_vars OBJECT,
-        dbt_vars OBJECT,
+        job_name STRING,
+        env_vars VARIANT,
+        dbt_vars VARIANT,
         selected_resources VARIANT
     )
 {%- endmacro %}
@@ -58,6 +59,7 @@
         dbt_cloud_run_id STRING,
         dbt_cloud_run_reason_category STRING,
         dbt_cloud_run_reason STRING,
+        job_name STRING,
         env_vars STRING,
         dbt_vars STRING,
         selected_resources STRING
