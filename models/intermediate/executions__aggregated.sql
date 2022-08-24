@@ -153,7 +153,7 @@ final as (
       , model_executions.execution_time +
         test_executions.execution_time +
         snapshot_executions.execution_time +
-        seed_executions.execution_time as query_execution_time
+        seed_executions.execution_time as execution_time
 
     from invocations
     left join last_query_at
