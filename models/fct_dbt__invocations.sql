@@ -43,6 +43,7 @@ invocations as (
 
     select
         base.command_invocation_id,
+        base.job_id
         base.dbt_version,
         base.project_name,
         base.run_started_at,

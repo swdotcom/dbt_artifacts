@@ -30,6 +30,7 @@ enhanced as (
 
     select
         command_invocation_id,
+        {{ dbt_utils.surrogate_key(['coalesce(dbt_cloud_job_id, job_name)']) }} as job_id,
         dbt_version,
         project_name,
         run_started_at,
