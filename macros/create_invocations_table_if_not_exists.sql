@@ -62,6 +62,7 @@
         job_name STRING,
         env_vars STRING,
         dbt_vars STRING,
-        selected_resources STRING
+        selected_resources STRING,
+        run_id STRING,
     )
 {%- endmacro %}
