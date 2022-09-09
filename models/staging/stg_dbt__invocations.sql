@@ -62,7 +62,7 @@ enhanced as (
         env_vars,
         dbt_vars,
         selected_resources,
-        row_number() over (partition by run_sk, order by base.run_started_at asc) as run_order
+        row_number() over (partition by run_sk order by base.run_started_at asc) as run_order
 
     from
         base
