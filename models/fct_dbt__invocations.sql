@@ -59,7 +59,7 @@ invocations as (
         datediff('microsecond', started_at, ended_at) / 1000000 as total_duration,
         executions.compile_execution_time,
         executions.query_execution_time,
-        executions.execution_time
+        executions.execution_time,
         base.dbt_command,
         base.full_refresh_flag,
         base.target_profile_name,
