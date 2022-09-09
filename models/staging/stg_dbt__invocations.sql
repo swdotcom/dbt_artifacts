@@ -41,7 +41,7 @@ enhanced as (
             run_id,
             command_invocation_id
         ) as run_id,
-        {{ dbt_utils.surrogate_key(['job_run_id']) }} as run_sk
+        {{ dbt_utils.surrogate_key(['job_run_id']) }} as run_sk,
         dbt_version,
         project_name,
         run_started_at,
