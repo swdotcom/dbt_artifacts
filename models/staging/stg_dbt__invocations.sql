@@ -35,7 +35,7 @@ renamed as (
         dbt_cloud_job_id,
         coalesce(
             dbt_cloud_job_id,
-            job_name,
+            core_job_id,
             target_database || '.' || target_schema
         ) as job_id,
         run_id as core_run_id,
