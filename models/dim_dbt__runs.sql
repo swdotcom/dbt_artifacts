@@ -29,7 +29,7 @@ with base as (
 executions as (
 
     select
-        executions__aggregated.*
+        executions__run_aggregated.*
 
     from
         {{ ref('executions__run_aggregated') }}
