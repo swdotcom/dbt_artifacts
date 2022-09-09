@@ -26,21 +26,58 @@ with base as (
 
 ),
 
-enhanced as (
+renamed as (
 
     select
         command_invocation_id,
+        job_name as core_job_id,
+        dbt_cloud_project_id,
+        dbt_cloud_job_id,
         coalesce(
             dbt_cloud_job_id,
             job_name,
             target_database || '.' || target_schema
         ) as job_id,
-        {{ dbt_utils.surrogate_key(['job_id']) }} as job_sk,
+        run_id as core_run_id,
+        dbt_cloud_run_id,
         coalesce(
             dbt_cloud_run_id,
-            run_id,
+            core_run_id,
             command_invocation_id
         ) as run_id,
+        dbt_version,
+        project_name,
+        run_started_at,
+        dbt_command,
+        full_refresh_flag as has_full_refresh_flag,
+        target_profile_name,
+        target_name,
+        target_database,
+        target_schema,
+        target_threads,
+        dbt_cloud_run_reason_category,
+        dbt_cloud_run_reason,
+        env_vars,
+        dbt_vars,
+        selected_resources
+
+    from
+        base
+
+),
+
+final as (
+
+    select
+        command_invocation_id,
+        job_name as core_job_id,
+        dbt_cloud_project_id,
+        dbt_cloud_job_id,
+        job_id,
+        {{ dbt_utils.surrogate_key(['job_id']) }} as job_sk,
+        run_id as core_run_id,
+        dbt_cloud_run_id,
+        run_id,
         {{ dbt_utils.surrogate_key(['run_id']) }} as run_sk,
         dbt_version,
         project_name,
@@ -52,21 +89,16 @@ enhanced as (
         target_database,
         target_schema,
         target_threads,
-        dbt_cloud_project_id,
-        dbt_cloud_job_id,
-        dbt_cloud_run_id,
         dbt_cloud_run_reason_category,
         dbt_cloud_run_reason,
-        job_name as core_job_id,
-        run_id as core_run_id,
         env_vars,
         dbt_vars,
         selected_resources,
         row_number() over (partition by run_sk order by base.run_started_at asc) as run_order
 
     from
-        base
+        renamed
 
 )
 
-select * from enhanced
+select * from final
