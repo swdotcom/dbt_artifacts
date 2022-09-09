@@ -61,7 +61,7 @@ invocations as (
         executions.query_execution_time,
         executions.execution_time,
         base.dbt_command,
-        base.full_refresh_flag,
+        base.has_full_refresh_flag,
         base.target_profile_name,
         base.target_name,
         base.target_database,
