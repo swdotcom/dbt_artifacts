@@ -10,9 +10,7 @@
 with invocations as (
 
     select
-        {{ granularity_field }}
-      , run_started_at
-      , run_order
+        *
     
     from
         {{ ref('stg_dbt__invocations') }}
@@ -57,7 +55,7 @@ model_executions as (
         {{ ref('stg_dbt__model_executions') }} as models
     inner join
         invocations
-        on models.{{ granularity_field }} = invocations.{{ granularity_field }}
+        on models.command_invocation_id = invocations.command_invocation_id
 
     group by 1
 
@@ -77,7 +75,7 @@ seed_executions as (
     from {{ ref('stg_dbt__seed_executions') }} as seeds
     inner join
         invocations
-        on seeds.{{ granularity_field }} = invocations.{{ granularity_field }}
+        on seeds.command_invocation_id = invocations.command_invocation_id
 
     group by 1
 
@@ -97,7 +95,7 @@ snapshot_executions as (
     from {{ ref('stg_dbt__snapshot_executions') }} as snapshots
     inner join
         invocations
-        on snapshots.{{ granularity_field }} = invocations.{{ granularity_field }}
+        on snapshots.command_invocation_id = invocations.command_invocation_id
 
     group by 1
 
@@ -117,7 +115,7 @@ test_executions as (
     from {{ ref('stg_dbt__seed_executions') }} as tests
     inner join
         invocations
-        on tests.{{ granularity_field }} = invocations.{{ granularity_field }}
+        on tests.command_invocation_id = invocations.command_invocation_id
 
     group by 1
 

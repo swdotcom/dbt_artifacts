@@ -46,7 +46,7 @@ invocations as (
         base.job_id,
         base.job_sk,
         base.run_id,
-        base.run_sk
+        base.run_sk,
         base.dbt_cloud_project_id,
         base.dbt_cloud_job_id,
         base.dbt_cloud_run_id,
