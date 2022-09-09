@@ -11,6 +11,7 @@ with invocations as (
 
     select
         {{ granularity_field }}
+      , run_started_at
     
     from
         {{ ref('stg_dbt__invocations') }}
@@ -31,7 +32,7 @@ with invocations as (
 model_executions as (
 
     select
-        models.{{ granularity_field }}
+        invocations.{{ granularity_field }}
       , count(distinct models.node_id) as models
       , sum(models.compile_execution_time) as compile_execution_time
       , sum(models.query_execution_time) as query_execution_time
@@ -53,7 +54,7 @@ model_executions as (
 seed_executions as (
 
     select
-        seeds.{{ granularity_field }}
+        invocations.{{ granularity_field }}
       , count(distinct seeds.node_id) as seeds
       , sum(seeds.compile_execution_time) as compile_execution_time
       , sum(seeds.query_execution_time) as query_execution_time
@@ -74,7 +75,7 @@ seed_executions as (
 snapshot_executions as (
 
     select
-        snapshots.{{ granularity_field }}
+        invocations.{{ granularity_field }}
       , count(distinct snapshots.node_id) as snapshots
       , sum(snapshots.compile_execution_time) as compile_execution_time
       , sum(snapshots.query_execution_time) as query_execution_time
@@ -95,7 +96,7 @@ snapshot_executions as (
 test_executions as (
 
     select
-        tests.{{ granularity_field }}
+        invocations.{{ granularity_field }}
       , count(distinct tests.node_id) as tests
       , sum(tests.compile_execution_time) as compile_execution_time
       , sum(tests.query_execution_time) as query_execution_time
