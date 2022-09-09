@@ -28,6 +28,12 @@ with invocations as (
 
 ),
 
+base as (
+
+    select distinct {{ granularity_field }} from invocations
+
+)
+
 max_run_order as (
 
     select
@@ -149,7 +155,7 @@ start_end as (
 final as (
 
     select
-        invocations.{{ granularity_field }}
+        base.{{ granularity_field }}
       , start_end.run_started_at
       , start_end.run_ended_at
       , max_run_order.invocations
@@ -182,7 +188,7 @@ final as (
         zeroifnull(snapshot_executions.execution_time) +
         zeroifnull(seed_executions.execution_time) as execution_time
 
-    from invocations
+    from base
     left join start_end
         on invocations.{{ granularity_field }} = start_end.{{ granularity_field }}
     left join max_run_order
