@@ -12,6 +12,7 @@ with invocations as (
     select
         {{ granularity_field }}
       , run_started_at
+      , run_order
     
     from
         {{ ref('stg_dbt__invocations') }}
@@ -29,6 +30,18 @@ with invocations as (
 
 ),
 
+max_run_order as (
+
+    select
+        {{ granularity_field }}
+      , max(run_order) as invocations
+    
+    from invocations
+    
+    group by 1
+
+),
+
 model_executions as (
 
     select
@@ -39,7 +52,6 @@ model_executions as (
       , sum(models.execution_time) as execution_time
       , min(invocations.run_started_at) as run_started_at
       , max(models.query_completed_at) as last_query_completed_at
-      , max(models.run_order) as max_run_order
 
     from
         {{ ref('stg_dbt__model_executions') }} as models
@@ -61,7 +73,6 @@ seed_executions as (
       , sum(seeds.execution_time) as execution_time
       , min(invocations.run_started_at) as run_started_at
       , max(seeds.query_completed_at) as last_query_completed_at
-      , max(models.run_order) as max_run_order
 
     from {{ ref('stg_dbt__seed_executions') }} as seeds
     inner join
@@ -82,7 +93,6 @@ snapshot_executions as (
       , sum(snapshots.execution_time) as execution_time
       , min(invocations.run_started_at) as run_started_at
       , max(snapshots.query_completed_at) as last_query_completed_at
-      , max(models.run_order) as max_run_order
 
     from {{ ref('stg_dbt__snapshot_executions') }} as snapshots
     inner join
@@ -103,7 +113,6 @@ test_executions as (
       , sum(tests.execution_time) as execution_time
       , min(invocations.run_started_at) as run_started_at
       , max(tests.query_completed_at) as last_query_completed_at
-      , max(models.run_order) as max_run_order
 
     from {{ ref('stg_dbt__seed_executions') }} as tests
     inner join
@@ -116,13 +125,13 @@ test_executions as (
 
 last_query_union as (
 
-    select {{ granularity_field }}, run_started_at, last_query_completed_at, run_order from model_executions
+    select {{ granularity_field }}, run_started_at, last_query_completed_at from model_executions
     union all
-    select {{ granularity_field }}, run_started_at, last_query_completed_at, run_order from test_executions
+    select {{ granularity_field }}, run_started_at, last_query_completed_at from test_executions
     union all
-    select {{ granularity_field }}, run_started_at, last_query_completed_at, run_order from snapshot_executions
+    select {{ granularity_field }}, run_started_at, last_query_completed_at from snapshot_executions
     union all
-    select {{ granularity_field }}, run_started_at, last_query_completed_at, run_order from model_executions
+    select {{ granularity_field }}, run_started_at, last_query_completed_at from model_executions
 
 ),
 
@@ -132,7 +141,6 @@ start_end as (
         {{ granularity_field }}
       , min(run_started_at) as run_started_at
       , max(last_query_completed_at) as run_ended_at
-      , max(run_order) as invocations
 
     from last_query_union
 
@@ -146,6 +154,7 @@ final as (
         invocations.{{ granularity_field }}
       , start_end.run_started_at
       , start_end.run_ended_at
+      , max_run_order.invocations
       , model_executions.models
       , test_executions.tests
       , snapshot_executions.snapshots
@@ -178,6 +187,8 @@ final as (
     from invocations
     left join start_end
         on invocations.{{ granularity_field }} = start_end.{{ granularity_field }}
+    left join max_run_order
+        on invocations.{{ granularity_field }} = max_run_order.{{ granularity_field }}
     left join model_executions
         on invocations.{{ granularity_field }} = model_executions.{{ granularity_field }}
     left join test_executions

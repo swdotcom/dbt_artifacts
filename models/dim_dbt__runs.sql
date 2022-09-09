@@ -53,6 +53,7 @@ final as (
       , executions.compile_execution_time
       , executions.query_execution_time
       , executions.execution_time
+      , executions.invocations
       , executions.models
       , executions.tests
       , executions.snapshots
