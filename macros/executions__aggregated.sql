@@ -32,7 +32,7 @@ base as (
 
     select distinct {{ granularity_field }} from invocations
 
-)
+),
 
 max_run_order as (
 
