@@ -11,6 +11,7 @@ with base as (
       , run_id
       , dbt_cloud_run_id
       , core_run_id
+      , job_sk
     
     from {{ ref('stg_dbt__invocations') }}
 
@@ -47,6 +48,7 @@ final as (
       , base.run_id
       , base.dbt_cloud_run_id
       , base.core_run_id
+      , job_sk
       , executions.run_started_at as started_at
       , executions.run_ended_at as ended_at
       , datediff('microsecond', started_at, ended_at) / 1000000 as total_duration
