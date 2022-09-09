@@ -70,12 +70,12 @@ final as (
 
     select
         command_invocation_id,
-        job_name as core_job_id,
+        core_job_id,
         dbt_cloud_project_id,
         dbt_cloud_job_id,
         job_id,
         {{ dbt_utils.surrogate_key(['job_id']) }} as job_sk,
-        run_id as core_run_id,
+        core_run_id,
         dbt_cloud_run_id,
         run_id,
         {{ dbt_utils.surrogate_key(['run_id']) }} as run_sk,
@@ -83,7 +83,7 @@ final as (
         project_name,
         run_started_at,
         dbt_command,
-        full_refresh_flag as has_full_refresh_flag,
+        has_full_refresh_flag,
         target_profile_name,
         target_name,
         target_database,
