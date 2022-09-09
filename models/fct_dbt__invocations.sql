@@ -29,13 +29,13 @@ with base as (
 executions as (
 
     select
-        executions__aggregated.*
+        executions__invocation_aggregated.*
 
     from
         {{ ref('executions__invocation_aggregated') }}
     inner join
         base
-        on executions__aggregated.command_invocation_id = base.command_invocation_id
+        on executions__invocation_aggregated.command_invocation_id = base.command_invocation_id
 
 ),
 
