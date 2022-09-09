@@ -190,17 +190,17 @@ final as (
 
     from base
     left join start_end
-        on invocations.{{ granularity_field }} = start_end.{{ granularity_field }}
+        on base.{{ granularity_field }} = start_end.{{ granularity_field }}
     left join max_run_order
-        on invocations.{{ granularity_field }} = max_run_order.{{ granularity_field }}
+        on base.{{ granularity_field }} = max_run_order.{{ granularity_field }}
     left join model_executions
-        on invocations.{{ granularity_field }} = model_executions.{{ granularity_field }}
+        on base.{{ granularity_field }} = model_executions.{{ granularity_field }}
     left join test_executions
-        on invocations.{{ granularity_field }} = test_executions.{{ granularity_field }}
+        on base.{{ granularity_field }} = test_executions.{{ granularity_field }}
     left join snapshot_executions
-        on invocations.{{ granularity_field }} = snapshot_executions.{{ granularity_field }}
+        on base.{{ granularity_field }} = snapshot_executions.{{ granularity_field }}
     left join seed_executions
-        on invocations.{{ granularity_field }} = seed_executions.{{ granularity_field }}        
+        on base.{{ granularity_field }} = seed_executions.{{ granularity_field }}        
 
 )
 
