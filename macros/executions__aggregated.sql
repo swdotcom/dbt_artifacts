@@ -213,7 +213,6 @@ final as (
         zeroifnull(snapshot_executions.execution_time) +
         zeroifnull(seed_executions.execution_time) as execution_time
       , iff(model_errors = 0
-            and model_skips = 0
             and test_fails = 0
             and test_errors = 0,
             True,
