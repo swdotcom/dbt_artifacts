@@ -51,9 +51,9 @@ model_executions as (
     select
         invocations.{{ granularity_field }}
       , count(distinct models.node_id) as models
-      , ifnull(sum(case when models.status = 'success' then 1 end), 0) as model_successes
-      , ifnull(sum(case when models.status = 'error' then 1 end), 0) as model_errors
-      , ifnull(sum(case when models.status = 'skipped' then 1 end), 0) as model_skips
+      , sum(case when models.status = 'success' then 1 end) as successes
+      , sum(case when models.status = 'error' then 1 end) as errors
+      , sum(case when models.status = 'skipped' then 1 end) as skips
       , sum(models.compile_execution_time) as compile_execution_time
       , sum(models.query_execution_time) as query_execution_time
       , sum(models.execution_time) as execution_time
@@ -115,10 +115,10 @@ test_executions as (
     select
         invocations.{{ granularity_field }}
       , count(distinct tests.node_id) as tests
-      , ifnull(sum(case when tests.status = 'pass' then 1 end), 0) as test_passes
-      , ifnull(sum(case when tests.status = 'fail' then 1 end), 0) as test_fails
-      , ifnull(sum(case when tests.status = 'warn' then 1 end), 0) as test_skips
-      , ifnull(sum(case when tests.status = 'error' then 1 end), 0) as test_errors
+      , sum(case when tests.status = 'pass' then 1 end) as passes
+      , sum(case when tests.status = 'fail' then 1 end) as fails
+      , sum(case when tests.status = 'warn' then 1 end) as skips
+      , sum(case when tests.status = 'error' then 1 end) as errors
       , sum(tests.compile_execution_time) as compile_execution_time
       , sum(tests.query_execution_time) as query_execution_time
       , sum(tests.execution_time) as execution_time
@@ -178,14 +178,14 @@ final as (
       , run_end.run_ended_at
       , max_run_order.invocations
       , model_executions.models
-      , model_executions.model_successes
-      , model_executions.model_errors
-      , model_executions.model_skips
+      , ifnull(model_executions.successes, 0) as model_successes
+      , ifnull(model_executions.errors, 0) as model_errors
+      , ifnull(model_executions.skips, 0) as model_skip
       , test_executions.tests
-      , test_executions.test_passes
-      , test_executions.test_fails
-      , test_executions.test_skips
-      , test_executions.test_errors
+      , ifnull(test_executions.passes, 0) as test_passes
+      , ifnull(test_executions.fails, 0) as test_fails
+      , ifnull(test_executions.skips, 0) as test_skips
+      , ifnull(test_executions.errors, 0) as test_errors
       , snapshot_executions.snapshots
       , seed_executions.seeds
       , model_executions.compile_execution_time as compile_execution_time_models
@@ -212,10 +212,10 @@ final as (
         zeroifnull(test_executions.execution_time) +
         zeroifnull(snapshot_executions.execution_time) +
         zeroifnull(seed_executions.execution_time) as execution_time
-      , iff(model_executions.model_errors = 0
-            and model_executions.model_skips = 0
-            and test_executions.test_fails = 0
-            and test_executions.test_errors = 0,
+      , iff(model_errors = 0
+            and model_skips = 0
+            and test_fails = 0
+            and test_errors = 0,
             True,
             False)::boolean as is_successful
 
