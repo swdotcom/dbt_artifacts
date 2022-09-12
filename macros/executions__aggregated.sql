@@ -180,7 +180,7 @@ final as (
       , model_executions.models
       , ifnull(model_executions.successes, 0) as model_successes
       , ifnull(model_executions.errors, 0) as model_errors
-      , ifnull(model_executions.skips, 0) as model_skip
+      , ifnull(model_executions.skips, 0) as model_skips
       , test_executions.tests
       , ifnull(test_executions.passes, 0) as test_passes
       , ifnull(test_executions.fails, 0) as test_fails
