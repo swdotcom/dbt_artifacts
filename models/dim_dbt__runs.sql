@@ -1,6 +1,7 @@
 {{
     config(
-        materialization='incremental'
+        materialization='incremental',
+        unique_key='run_sk'
     )
 }}
 
