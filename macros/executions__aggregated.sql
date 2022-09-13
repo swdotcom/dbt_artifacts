@@ -125,7 +125,7 @@ test_executions as (
       , max(tests.query_completed_at) as last_query_completed_at
       , array_agg(distinct tests.status) within group (order by tests.status) as status_array
 
-    from {{ ref('stg_dbt__seed_executions') }} as tests
+    from {{ ref('stg_dbt__test_executions') }} as tests
     inner join
         invocations
         on tests.command_invocation_id = invocations.command_invocation_id
@@ -177,17 +177,17 @@ final as (
       , run_start.run_started_at
       , run_end.run_ended_at
       , max_run_order.invocations
-      , model_executions.models
+      , ifnull(model_executions.models, 0) as models
       , ifnull(model_executions.successes, 0) as model_successes
       , ifnull(model_executions.errors, 0) as model_errors
       , ifnull(model_executions.skips, 0) as model_skips
-      , test_executions.tests
+      , ifnull(test_executions.tests, 0) as tests
       , ifnull(test_executions.passes, 0) as test_passes
       , ifnull(test_executions.fails, 0) as test_fails
       , ifnull(test_executions.skips, 0) as test_skips
       , ifnull(test_executions.errors, 0) as test_errors
-      , snapshot_executions.snapshots
-      , seed_executions.seeds
+      , ifnull(snapshot_executions.snapshots, 0) as snapshots
+      , ifnull(seed_executions.seeds, 0) as seeds
       , model_executions.compile_execution_time as compile_execution_time_models
       , model_executions.query_execution_time as query_execution_time_models
       , model_executions.execution_time as execution_time_models
