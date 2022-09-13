@@ -40,7 +40,7 @@ snapshot_executions as (
       , compile_execution_time
       , query_started_at
       , query_completed_at
-      , query_execution_time,   
+      , query_execution_time  
       , execution_time
       , status
       , rows_affected
