@@ -20,5 +20,8 @@ models:
     description: '{{ doc("tags") }}'
   - name: test_execution_id
     description: '{{ doc("test_execution_id") }}'
+    tests:
+      - not_null
+      - unique
   - name: test_path
     description: '{{ doc("test_path") }}'

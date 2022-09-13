@@ -1,0 +1,16 @@
+version: 2
+
+models:
+- name: dim_dbt__jobs
+  description: Dimension model that contains data about jobs.
+  columns:
+  - name: job_sk
+    tests:
+      - not_null
+      - unique
+  - name: job_id
+  - name: dbt_cloud_job_id
+  - name: core_job_id
+  - name: name
+  - name: is_dbt_cloud_job
+  - name: is_local_dev

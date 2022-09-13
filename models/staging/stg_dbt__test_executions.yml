@@ -22,6 +22,9 @@ models:
     description: '{{ doc("status") }}'
   - name: test_execution_id
     description: '{{ doc("test_execution_id") }}'
+    tests:
+      - not_null
+      - unique
   - name: thread_id
     description: '{{ doc("thread_id") }}'
   - name: total_node_runtime

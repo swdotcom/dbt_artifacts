@@ -1,0 +1,33 @@
+version: 2
+
+models:
+- name: dim_dbt__runs
+  description: Dimension model that contains data about runs.
+  columns:
+  - name: run_sk
+    tests:
+      - not_null
+      - unique
+  - name: run_id
+  - name: dbt_cloud_run_id
+  - name: core_run_id
+  - name: job_sk
+  - name: started_at
+  - name: ended_at
+  - name: total_duration
+  - name: compile_execution_time
+  - name: query_execution_time
+  - name: execution_time
+  - name: invocations
+  - name: models
+  - name: model_successes
+  - name: model_errors
+  - name: model_skips
+  - name: tests
+  - name: test_passes
+  - name: test_fails
+  - name: test_skips
+  - name: test_errors
+  - name: snapshots
+  - name: seeds
+  - name: is_successful
