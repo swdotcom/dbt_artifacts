@@ -40,7 +40,7 @@ renamed as (
         ) as job_id
       , run_id as core_run_id
       , dbt_cloud_run_id
-      , coalesce
+      , coalesce(
             dbt_cloud_run_id,
             core_run_id,
             command_invocation_id
