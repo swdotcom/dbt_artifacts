@@ -11,6 +11,7 @@ with model_executions as (
         model_execution_id as node_execution_id
       , command_invocation_id
       , node_id
+      , 'model' as node_type
       , query_id
       , thread_id
       , run_started_at
@@ -53,6 +54,7 @@ test_executions as (
         test_execution_id as node_execution_id
       , command_invocation_id
       , node_id
+      , 'test' as node_type
       , null as query_id
       , thread_id
       , run_started_at
