@@ -1,7 +1,7 @@
 version: 2
 
 models:
-- name: fct_dbt__invocations
+- name: fct_dbt__node_executions
   description: Fact model that contains data about node executions.
   columns:
   - name: command_invocation_id
