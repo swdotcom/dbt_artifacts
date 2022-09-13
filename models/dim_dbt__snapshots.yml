@@ -26,5 +26,8 @@ models:
     description: '{{ doc("schema") }}'
   - name: snapshot_execution_id
     description: '{{ doc("snapshot_execution_id") }}'
+    tests:
+      - not_null
+      - unique
   - name: strategy
     description: '{{ doc("strategy") }}'

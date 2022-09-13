@@ -29,10 +29,10 @@ with base as (
 exposures as (
 
     select
-        exposure_execution_id,
-        command_invocation_id,
-        node_id,
-        run_started_at
+        exposure_execution_id
+      , command_invocation_id
+      , node_id
+      , run_started_at
 
     from
         base

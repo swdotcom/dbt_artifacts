@@ -12,6 +12,9 @@ models:
     description: '{{ doc("materialization") }}'
   - name: model_execution_id
     description: '{{ doc("model_execution_id") }}'
+    tests:
+      - not_null
+      - unique
   - name: name
     description: '{{ doc("name") }}'
   - name: node_id

@@ -29,25 +29,25 @@ with base as (
 test_executions as (
 
     select
-        test_execution_id,
-        command_invocation_id,
-        node_id,
-        thread_id,
-        run_started_at,
-        compile_started_at,
-        compile_completed_at,
-        compile_execution_time,
-        query_started_at,
-        query_completed_at,
-        query_execution_time,    
-        execution_time,
-        status,
-        failures,
-        materialization,
-        database,
-        schema,
-        name,
-        compiled_sql
+        test_execution_id
+      , command_invocation_id
+      , node_id
+      , thread_id
+      , run_started_at
+      , compile_started_at
+      , compile_completed_at
+      , compile_execution_time
+      , query_started_at
+      , query_completed_at
+      , query_execution_time,   
+      , execution_time
+      , status
+      , failures
+      , materialization
+      , database
+      , schema
+      , name
+      , compiled_sql
 
     from
         base

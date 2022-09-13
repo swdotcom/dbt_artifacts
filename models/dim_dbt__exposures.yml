@@ -12,6 +12,9 @@ models:
     description: '{{ doc("description") }}'
   - name: exposure_execution_id
     description: '{{ doc("exposure_execution_id") }}'
+    tests:
+      - not_null
+      - unique
   - name: maturity
     description: '{{ doc("maturity") }}'
   - name: name
