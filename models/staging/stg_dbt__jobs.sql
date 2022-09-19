@@ -32,6 +32,9 @@ with data_table as (
       , ('e5c6c01d58e904d89d1929d2193da101','Whitney local dev')
       , ('edd4b90229084f9b5b42d84b91c69c6b','Org Signup local test')
       , ('b5d4ed6284cf404f7ad152f36da76e6b','Michael local dev')
+      , ('d98420da8d2b76e41ceb98085569e395','Staging - external (3 hours)')
+      , ('9414f98871ac648972b33820552aec0e','Staging - internal (8 hours)')
+      , ('8072a178dbdc6167b19235baefba2abc','Deploy dev changes')
     ) as _table (job_sk, name)
 
 )
