@@ -36,7 +36,7 @@ with data_table as (
       , ('9414f98871ac648972b33820552aec0e', 'Staging - internal (8 hours)', 'stage')
       , ('8072a178dbdc6167b19235baefba2abc', 'Deploy dev changes', 'stage')
       , ('4d0c33af7839dff8084a2f5a3fd6eea8', 'Clone dw.dw into dw.dw_staging and deploy dev changes', 'stage')
-    ) as _table (job_sk, name, environment_group)
+    ) as _table (job_sk, name, environment_type)
 
 )
 
