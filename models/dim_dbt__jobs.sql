@@ -24,6 +24,7 @@ final as (
       , base.dbt_cloud_job_id
       , base.core_job_id
       , names.name
+      , base.environment_group
       , nvl2(base.dbt_cloud_job_id, true, false)::boolean as is_dbt_cloud_job
       , nvl2(coalesce(base.dbt_cloud_job_id, base.core_job_id), false, true)::boolean as is_local_dev
 
