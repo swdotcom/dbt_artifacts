@@ -80,7 +80,7 @@
                 '{{ model.node.database }}', {# database #}
                 '{{ model.node.schema }}', {# schema #}
                 '{{ model.node.name }}', {# name #}
-                '{{ model.node.compiled_sql | replace('\\', '\\\\') | replace("'", "\\'") }}' {# compiled_sql #}
+                '{{ model.node.compiled_code | replace('\\', '\\\\') | replace("'", "\\'") }}' {# compiled_sql #}
             )
             {%- if not loop.last %},{%- endif %}
         {%- endfor %}

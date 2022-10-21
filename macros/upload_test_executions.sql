@@ -74,7 +74,7 @@
                 '{{ test.node.database }}', {# database #}
                 '{{ test.node.schema }}', {# schema #}
                 '{{ test.node.name }}', {# name #}
-                '{{ test.node.compiled_sql | replace("'","\\'") }}' {# compiled_sql #}
+                '{{ test.node.compiled_code | replace("'","\\'") }}' {# compiled_sql #}
             )
             {%- if not loop.last %},{%- endif %}
         {%- endfor %}
