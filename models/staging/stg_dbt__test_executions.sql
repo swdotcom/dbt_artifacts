@@ -32,7 +32,7 @@ enhanced as (
         {{ dbt_utils.surrogate_key(['command_invocation_id', 'unique_id']) }} as test_execution_id
       , command_invocation_id
       , unique_id as node_id
-      , split(thread_id, '-')[1]::int as thread_id
+      , thread_id
       , run_started_at
       , compile_started_at
       , compile_completed_at
